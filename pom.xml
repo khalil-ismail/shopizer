@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.shopizer</groupId>
 	<artifactId>shopizer</artifactId>
+	<version>2.14.0</version>
 	<packaging>pom</packaging>
-	<version>3.2.3</version>
 
 	<name>shopizer</name>
 	<url>http://ww.shopizer.com</url>
@@ -20,7 +22,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.5.12</version>
+		<version>2.3.3.RELEASE</version>
 	</parent>
 
 	<modules>
@@ -35,19 +37,21 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<!--java version -->
-		<java.version>11</java.version>
-
+		<java.version>1.8</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
+		<!-- eclipse stuff -->
+		<m2eclipse.wtp.contextRoot>/</m2eclipse.wtp.contextRoot>
 
+		<!--shopizer version -->
+		<shopizer.version>2.14.0</shopizer.version>
 		<shopizer.search.version>2.11.1</shopizer.search.version>
-		<shopizer-canadapost.version>2.15.0</shopizer-canadapost.version>
+		<shopizer-canadapost.version>2.11.0</shopizer-canadapost.version>
 
-		<!-- TODO replace with starter -->
 		<elasticsearch.version>7.5.2</elasticsearch.version>
 		<guava.version>27.1-jre</guava.version>
 		<commons-lang.version>3.5</commons-lang.version>
-		<commons-io.version>2.7</commons-io.version>
+		<commons-io.version>2.5</commons-io.version>
 		<commons-collections4.version>4.1</commons-collections4.version>
 		<commons-validator.version>1.5.1</commons-validator.version>
 		<commons-fileupload>1.3.3</commons-fileupload>
@@ -55,19 +59,18 @@
 
 		<org.apache.httpcomponent.version>4.5.2</org.apache.httpcomponent.version>
 		<javax.inject.version>1</javax.inject.version>
+		<hibernate-ehcache.version>5.4.12.Final</hibernate-ehcache.version>
 		<javax.el.version>2.2.4</javax.el.version>
 		<javax.servlet-api-version>3.0.1</javax.servlet-api-version>
 		<javax.annotation>1.3.2</javax.annotation>
 		<infinispan.version>9.4.18.Final</infinispan.version>
 		<infinispan.tree.version>9.4.18.Final</infinispan.tree.version>
 		<mysql-jdbc-version>8.0.21</mysql-jdbc-version>
-		<oracle.version>18.3.0.0</oracle.version>
-		<postgresql.version>42.2.18</postgresql.version>
 		<simple-json-version>1.1.1</simple-json-version>
-		<jackson-version-databind>2.12.6.1</jackson-version-databind>
+		<jackson-version-databind>2.10.2</jackson-version-databind>
 		<jackson-version>2.10.2</jackson-version>
 		<geoip2.version>2.7.0</geoip2.version>
-		<drools.version>7.32.0.Final</drools.version>
+		<drools.version>7.20.0.Final</drools.version>
 		<google-client-maps-services-version>0.1.6</google-client-maps-services-version>
 		<jwt.version>0.8.0</jwt.version>
 
@@ -84,35 +87,34 @@
 	<!--BOM -->
 	<dependencyManagement>
 		<dependencies>
-
+	
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-web</artifactId>
 			</dependency>
-			<dependency>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-starter-cache</artifactId>
-			</dependency>
+
 			<dependency>
 				<groupId>com.shopizer</groupId>
 				<artifactId>sm-core</artifactId>
-				<version>3.2.3</version>
+				<version>${shopizer.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.shopizer</groupId>
 				<artifactId>sm-core-model</artifactId>
-				<version>3.2.3</version>
+				<version>${shopizer.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.shopizer</groupId>
 				<artifactId>sm-core-modules</artifactId>
-				<version>3.2.3</version>
+				<version>${shopizer.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.shopizer</groupId>
 				<artifactId>sm-shop-model</artifactId>
-				<version>3.2.3</version>
+				<version>${shopizer.version}</version>
 			</dependency>
+
+
 
 			<!-- https://mvnrepository.com/artifact/javax.inject/javax.inject -->
 			<dependency>
@@ -129,9 +131,38 @@
 			</dependency>
 
 			<dependency>
+				<groupId>org.apache.tiles</groupId>
+				<artifactId>tiles-jsp</artifactId>
+				<version>3.0.4</version>
+				<exclusions>
+					<exclusion>
+						<groupId>javax.servlet</groupId>
+						<artifactId>servlet-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+
+			<dependency>
 				<groupId>org.mapstruct</groupId>
 				<artifactId>mapstruct</artifactId>
 				<version>${org.mapstruct.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.glassfish.web</groupId>
+				<artifactId>jstl-impl</artifactId>
+				<version>1.2</version>
+				<exclusions>
+					<exclusion>
+						<groupId>javax.servlet</groupId>
+						<artifactId>servlet-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>javax.servlet.jsp</groupId>
+						<artifactId>jsp-api</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 
 			<dependency>
@@ -173,20 +204,19 @@
 				<version>${simple-json-version}</version>
 			</dependency>
 
+			<!-- sm-search -->
+			<dependency>
+				<groupId>com.shopizer</groupId>
+				<artifactId>sm-search</artifactId>
+				<version>${shopizer.search.version}</version>
+			</dependency>
+
+
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
 				<version>${mysql-jdbc-version}</version>
 			</dependency>
-
-			<!-- For connecting to oracle -->
-			<!-- <dependency> <groupId>com.oracle.database.jdbc</groupId> <artifactId>ojdbc8</artifactId> 
-				<version>${oracle.version}</version> </dependency> -->
-
-
-			<!-- For connecting to postgresql -->
-			<!-- <dependency> <groupId>org.postgresql</groupId> <artifactId>postgresql</artifactId> 
-				<version>${postgresql.version}</version> <scope>runtime</scope> </dependency> -->
 
 			<!-- Google Map API -->
 			<dependency>
@@ -274,14 +304,14 @@
 			<dependency>
 				<groupId>com.amazonaws</groupId>
 				<artifactId>aws-java-sdk-s3</artifactId>
-				<version>1.11.640</version>
+				<version>1.11.538</version>
 			</dependency>
 
 			<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-ses -->
 			<dependency>
 				<groupId>com.amazonaws</groupId>
 				<artifactId>aws-java-sdk-ses</artifactId>
-				<version>1.11.640</version>
+				<version>1.11.538</version>
 			</dependency>
 
 			<!-- google cloud storage -->
@@ -373,7 +403,6 @@
 
 	<!--general dependencies -->
 	<dependencies>
-
 		<dependency>
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
@@ -432,34 +461,29 @@
 			<artifactId>json-simple</artifactId>
 			<exclusions>
 				<exclusion>
-					<groupId>junit</groupId>
-					<artifactId>junit</artifactId>
+						<groupId>junit</groupId>
+						<artifactId>junit</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
 
-		<!-- Elastic search TODO replace with starter-->
+		<!-- sm-search -->
+		<dependency>
+			<groupId>com.shopizer</groupId>
+			<artifactId>sm-search</artifactId>
+		</dependency>
+
+		<!-- Elastic search -->
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>${elasticsearch.version}</version><!--$NO-MVN-MAN-VER$ -->
+		</dependency>
 
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-
-		<!-- oracle -->
-		<!-- <dependency> <groupId>com.oracle</groupId> <artifactId>ojdbc8</artifactId> 
-			<version>${oracle.version}</version> </dependency> -->
-
-
-		<!-- postgres <dependency> <groupId>org.postgresql</groupId> <artifactId>postgresql</artifactId> 
-			</dependency> -->
-
-		<dependency>
-			<groupId>org.junit.vintage</groupId>
-			<artifactId>junit-vintage-engine</artifactId>
-			<scope>test</scope>
-		</dependency>
-
-
 	</dependencies>
 
 	<repositories>
@@ -467,7 +491,7 @@
 		<repository>
 			<id>oss-sonatype</id>
 			<name>oss-sonatype</name>
-			<url>https://s01.oss.sonatype.org/content/repositories/snapshots/</url>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 			<snapshots>
 				<enabled>true</enabled>
 			</snapshots>
@@ -500,7 +524,26 @@
 
 	<build>
 		<plugins>
-
+		
+		
+		
+			<!--
+			<plugin>
+			<groupId>org.sonarsource.scanner.maven</groupId>
+			<artifactId>sonar-maven-plugin</artifactId>
+			<version>3.3.0.603</version>
+			<executions>
+			<execution>
+			<phase>verify</phase>
+			<goals>
+			<goal>sonar</goal>
+			</goals>
+			</execution>
+			</executions>
+			</plugin>
+		    -->
+		
+		
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -516,14 +559,6 @@
 						<!-- other annotation processors -->
 					</annotationProcessorPaths>
 				</configuration>
-			</plugin>
-			<plugin>
-			   	 <groupId>org.apache.maven.plugins</groupId>
-			  	 <artifactId>maven-surefire-plugin</artifactId>
-				<version>2.19.1</version>
-			    	<configuration>
-					<testFailureIgnore>true</testFailureIgnore>
-			    	</configuration>
 			</plugin>
 
 			<plugin>
@@ -569,8 +604,7 @@
 				</executions>
 			</plugin>
 			<!--OSSRH -->
-
-			<!-- 			
+			<!--
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
@@ -583,7 +617,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
@@ -597,10 +630,65 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin> 
+			</plugin>
 			-->
 
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.3</version>
+				<executions>
+					<execution>
+						<id>default-prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-prepare-agent-integration</id>
+						<goals>
+							<goal>prepare-agent-integration</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-report</id>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-report-integration</id>
+						<goals>
+							<goal>report-integration</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-check</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<rule>
+									<element>BUNDLE</element>
+									<limits>
+										<limit>
+											<counter>LINE</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>${coverage.lines}</minimum>
+										</limit>
+										<limit>
+											<counter>BRANCH</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>${coverage.branches}</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-
 </project>
